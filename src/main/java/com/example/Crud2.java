@@ -53,7 +53,7 @@ public class Crud2 {
         } while (opcao != 0);
 
         } catch(SQLException e) {
-            System.out.println("Não foi possível conectar ao BD");
+            System.out.println("Não foi possível conectar ao BD" + e.getMessage());
         }
 
         
@@ -72,7 +72,7 @@ public class Crud2 {
         stmt.setString(1,aluno);
         stmt.setInt(2, idade);
         stmt.executeUpdate();
-        
+
         System.out.println("Registro criado com sucesso");
 
     }
@@ -92,11 +92,34 @@ public class Crud2 {
     }
 
     private static void atualizarRegistro(Connection conn, Scanner scanner)throws SQLException {
+        System.out.println("Digite o nome do aluno a ser atualizado");
+        String alunoAntigo = scanner.next();
+        System.out.println("Digite o novo nome do aluno");
+        String alunoNovo = scanner.next();
+        System.out.println("Digite a nova idade do aluno");
+        int idadeNova = scanner.nextInt();        
+                
+        String sql = ("UPDATE planilha SET aluno=?, idade=? WHERE aluno=?;");
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1,alunoNovo);
+        stmt.setInt(2,idadeNova);
+        stmt.setString(3,alunoAntigo);
+        stmt.executeUpdate();
 
+        System.out.println("Registro atualizado com successo");
+        
     }
 
     private static void deletarRegistro(Connection conn, Scanner scanner)throws SQLException {
+        System.out.println("Digite o nome do aluno a ser deletado");
+        String aluno = scanner.next();
 
+        String sql = ("DELETE FROM planilha WHERE aluno=?;");
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1,aluno);
+        stmt.executeUpdate();
+
+        System.out.println("Registro deletado com sucesso");
     }
 
 }
