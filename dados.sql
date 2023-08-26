@@ -5,7 +5,7 @@
 
 drop table if exists planilha;
 create table planilha(
-    aluno varchar(250) not null,
+    aluno varchar(140) not null,
     idade int not null
 );
 
